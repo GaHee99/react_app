@@ -1,39 +1,30 @@
 import {useState} from "react"
+import { useEffect } from "react/cjs/react.development"
 
 function App() {
-  const [toDo, setToDo] = useState("")
-  const [toDos, setToDos] = useState([])
-  const onChange = (event) => setToDo(event.target.value)
-  const onSubmit = (event) =>{
-     event.preventDefault()
-    if(toDo ===""){
-      return
-    }
-    setToDos((currentArray) => [toDo, ...currentArray])
-    setToDo("")
-   
-  }
-  console.log(toDos)
-     return(
-  <div>
-    <h1>My To Dos ({toDos.length})</h1>
-    <form onSubmit={onSubmit}>
-    <input 
-    value ={toDo} 
-    onChange = {onChange} 
-    type = "text" 
-    placeholder="Write your to do.."/>
-    <button>Add To Do</button>
-    </form>
-    <hr />
-    <ul>
-      {toDos.map((item , index) => (
-      <li key={index}>{item}</li>
-      ))}
+  const [loading, setLoading] = useState(true)
+  //여기서 coins의 초깃값을 안넣어주면, 초깃값이 undefined라서 오류뜬다. 
+  //꼭 빈 배열을 넣어주기
+  const [coins, setCoins] = useState([]) 
+  useEffect( () => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+    .then((response)=>response.json())
+    .then((json)=> {
+      setCoins(json)
+      setLoading(false)
+    })
+  }, [])
+  return (
+    <div>
+      <h1>The Coins ({coins.length})</h1>
+      {loading ? <strong>Loading...</strong> : null}
+      <ul>
+        {coins.map((coin) =>(
+        <li key={coin.id}>{coin.name} ({coin.symbol}) : {coin.quotes.USD.price}</li>
+        ))}
       </ul>
-  </div>
-
+    </div>
   )
-}
+  } 
 
 export default App
