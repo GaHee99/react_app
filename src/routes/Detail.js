@@ -1,6 +1,8 @@
 import {useParams} from "react-router-dom";
 import {useEffect,useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import style from 'C:/Users/SMU/Desktop/react_app/src/Detail.module.css';
+
 function Detail() {
   const[loading, setLoading]=useState(true)
   const[json, setJson]=useState([])
@@ -17,10 +19,10 @@ function Detail() {
     getMovie();
   },[]);
   return(
-  <div>
+  <div className={style.div}>
     {loading ? (<h1>Loading...</h1>) : (
-      <div>
-        <h1>
+      <div >
+        <h1 className={style.title}>
         <Link to ={`/movie/${id}/more`}>
           {json.title}</Link></h1>
         <img src={json.background_image} />
