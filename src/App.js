@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Detail from './routes/Detail'
 import Home from './routes/Home'
-import More from './routes/More'
+
 
 function App() {
   return (
+    <Router basename={process.env.PUBLIC_URL}>
+
     <Router>
       <Switch>
         <Route path="/hello">
@@ -16,13 +18,12 @@ function App() {
         >
           <Detail />
         </Route>
-        <Route path="/movie/more">
-          <h1>More</h1>
-        </Route>
-        <Route path="/">
+      
+       < Route path={`${process.env.PUBLIC_URL}/`} element={Home} >
           <Home />
         </Route>
       </Switch>
+    </Router>
     </Router>
   )
 }
