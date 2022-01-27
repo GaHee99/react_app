@@ -26,8 +26,9 @@ function Detail() {
         <Link to ={`/movie/${id}/more`}>
           {json.title}</Link></h1>
         <img src={json.background_image} />
-        <h3>Intro : {json.description_intro}</h3>
-        <p>Description : {json.description_full}</p>
+
+        <h3>Intro : {json.description_intro.length > 235 ? `${json.description_intro.slice(0, 30)}...` : json.description_intro}</h3>
+        <p>Description : {json.description_full.length > 400 ? `${json.description_full.slice(0,400)}...` : json.description_intro}</p>
         <p>Rating : {json.rating}</p>
        
     </div>)}
